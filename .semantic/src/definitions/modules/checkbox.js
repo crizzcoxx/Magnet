@@ -175,7 +175,7 @@ $.fn.checkbox = function(parameters) {
         },
 
         preventDefaultOnInputTarget: function() {
-          if(typeof event !== 'undefined' && $(event.target).is(selector.input)) {
+          if(typeof event !== 'undefined' && event !== null && $(event.target).is(selector.input)) {
             module.verbose('Preventing default check action after manual check action');
             event.preventDefault();
           }
@@ -244,7 +244,7 @@ $.fn.checkbox = function(parameters) {
               $input.blur();
               shortcutPressed = true;
             }
-            else if(!event.ctrlKey && ( key == keyCode.space || key == keyCode.enter) ) {
+            else if(!event.ctrlKey && ( key == keyCode.space || (key == keyCode.enter && settings.enableEnterKey)) ) {
               module.verbose('Enter/space key pressed, toggling checkbox');
               module.toggle();
               shortcutPressed = true;
@@ -829,6 +829,7 @@ $.fn.checkbox.settings = {
   // delegated event context
   uncheckable         : 'auto',
   fireOnInit          : false,
+  enableEnterKey      : true,
 
   onChange            : function(){},
 

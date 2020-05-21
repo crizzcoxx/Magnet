@@ -1,11 +1,28 @@
+
+require("dotenv").config();
+
+const path = require("path");
+const Dotenv = require("dotenv-webpack");
+const withImages = require('next-images');
 const withPlugins = require('next-compose-plugins');
-const css = require('@zeit/next-css');
+const withCSS = require('@zeit/next-css')
 
 const nextConfig = {
   target: 'serverless',
   webpack(config) {
-    config.module.rules.push({
-      test: /\.(png|svg|eot|otf|ttf|woff|woff2)$/,
+    config.plugins = config.plugins || [];
+
+    config.plugins = [
+      ...config.plugins,
+
+      // Read the .env file
+      new Dotenv({
+        path: path.join(__dirname, ".env"),
+        systemvars: true
+      })
+    ],
+      config.module.rules.push({
+      test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
       use: {
         loader: 'url-loader',
         options: {
@@ -14,10 +31,10 @@ const nextConfig = {
           outputPath: 'static/',
           name: '[name].[ext]',
         },
-      },
+      }
     });
     return config;
   },
 };
 
-module.exports = withPlugins([[css]], nextConfig);
+module.exports = withPlugins([[withCSS, withImages]], nextConfig);
