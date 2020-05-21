@@ -39,11 +39,7 @@
     "fomantic-ui-css": "^2.7.8",
     "helmet": "^3.21.2",
     "isomorphic-fetch": "^2.2.1",
-<<<<<<< HEAD
     "jimp": "^0.12.1",
-=======
-    "jimp": "^0.8.5",
->>>>>>> c909f03c28036e78b79c452f8c58daf218526a2f
     "jss": "^9.8.7",
     "mongoose": "^5.7.6",
     "mongoose-mongodb-errors": "0.0.2",
@@ -86,11 +82,7 @@
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
     "url-loader": "^2.2.0",
-<<<<<<< HEAD
     "webpack": "^4.43.0",
-=======
-    "webpack": "^4.20.2",
->>>>>>> c909f03c28036e78b79c452f8c58daf218526a2f
     "webpack-cli": "^3.3.7"
   },
   "main": "server.js",
