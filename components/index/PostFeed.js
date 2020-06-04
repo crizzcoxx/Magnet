@@ -1,7 +1,7 @@
 import { Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
 import NewPost from './NewPost';
 import Post from './Post';
-import { addPost, deletePost, likePost, unlikePost, getPostFeed } from '../../lib/api'
+import { addPost, deletePost, likePost, unlikePost, getPostFeed, addComment } from '../../lib/api'
 
 class PostFeed extends React.Component {
   state = {
@@ -132,6 +132,24 @@ class PostFeed extends React.Component {
       }).catch(err => console.error(err))
   }
 
+  handleAddComment = (postId, text) => {
+    const comment = { text };
+    addComment(postId, comment)
+      .then(postData => {
+        const postIndex = this.state.post.findIndex(
+          post => post._id === postData._id
+        )
+        const updatedPosts = [
+          ...this.state.posts.slice(0, postIndex),
+          postData,
+          ...this.state.posts.slice(postIndex + 1)
+        ]
+        this.setState({
+          posts: updatedPosts
+        })
+      }).catch(err => console.error(err))
+  }
+
   render() {
     const { classes, auth } = this.props;
     const { posts, text, image, isAddingPost, isVisible, isDeletingPost } = this.state;
@@ -161,6 +179,7 @@ class PostFeed extends React.Component {
               handleDeletePost={this.handleDeletePost}
               handleAddPost={this.handleAddPost}
               handleToggleLike={this.handleToggleLike}
+              handleAddComment={this.handleAddComment}
             >
             </Post>
           ))}

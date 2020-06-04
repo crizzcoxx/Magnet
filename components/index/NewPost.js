@@ -107,7 +107,8 @@ const NewPost = ({
         onClick={setVisible}
         onChange={handleChange}
         // onKeyDown={onKeyDown}
-      ></Form.TextArea>
+      >
+      </Form.TextArea>
 
       {isVisible ? (
         <PostButtonBox>

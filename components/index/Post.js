@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Comment, Form, Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
+import { Comment, Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
+import Comments from './Comments'
 
 const CommentPostBox = styled(Comment.Group)`
   &&&&{
@@ -76,7 +77,7 @@ const CommentIcon = styled(Icon)`
   }
 `;
 
-class Post extends React.Component {
+class Post extends React.PureComponent {
   state = {
     isLiked: false,
     numLikes: 0,
@@ -86,7 +87,8 @@ class Post extends React.Component {
   componentDidMount() {
     this.setState({
       isLiked: this.checkLiked(this.props.post.likes),
-      numLikes: this.props.post.likes.length
+      numLikes: this.props.post.likes.length,
+      comments: this.props.post.comments
     })
   }
 
@@ -97,16 +99,25 @@ class Post extends React.Component {
       this.setState({
         isLiked: this.checkLiked(this.props.post.likes),
         numLikes: this.props.post.likes.length
-      })
-    } else {
-      console.log('prev props', prevProps)
+      });
     }
+
+    if (prevProps.post.comments.length !== this.props.post.comments.length)
+      {
+        this.setState({
+          comments: this.props.post.comments
+        })
+      }
+    // } else {
+    //   console.log('prev props', prevProps)
+    // }
+
   }
 
   checkLiked = likes => likes.includes(this.props.auth.user._id)
 
   render() {
-    const { post, auth, isDeletingPost, handleDeletePost, handleToggleLike } = this.props;
+    const { post, auth, isDeletingPost, handleDeletePost, handleToggleLike, handleAddComment } = this.props;
     const { isLiked, numLikes, comments } = this.state;
 
     const isPostCreator = post.postedBy._id === auth.user._id;
@@ -178,6 +189,12 @@ class Post extends React.Component {
               />
                 {comments.length}
             </LoveCommentLine>
+            <Comments
+              auth={auth}
+              postId={post._id}
+              comments={comments}
+              handleAddComment={handleAddComment}
+            />
           </CommentUserNameBox>
         </Comment>
         <CommentPostDivider dividing></CommentPostDivider>
