@@ -1,7 +1,7 @@
 import { Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
 import NewPost from './NewPost';
 import Post from './Post';
-import { addPost, deletePost, likePost, unlikePost, getPostFeed, addComment } from '../../lib/api';
+import { addPost, deletePost, likePost, unlikePost, getPostFeed, addComment, deleteComment } from '../../lib/api';
 import styled from 'styled-components';
 
 class PostFeed extends React.Component {
@@ -137,7 +137,7 @@ class PostFeed extends React.Component {
     const comment = { text };
     addComment(postId, comment)
       .then(postData => {
-        const postIndex = this.state.post.findIndex(
+        const postIndex = this.state.posts.findIndex(
           post => post._id === postData._id
         )
         const updatedPosts = [
@@ -149,6 +149,23 @@ class PostFeed extends React.Component {
           posts: updatedPosts
         })
       }).catch(err => console.error(err))
+  }
+
+  handleDeleteComment = (postId, comment) => {
+    deleteComment(postId, comment)
+      .then(postData => {
+        const postIndex = this.state.posts.findIndex(
+          post => post._id === postData._id
+        );
+        const updatedPosts = [
+          ...this.state.posts.slice(0, postIndex),
+          postData,
+          ...this.state.posts.slice(postIndex + 1)
+        ];
+        this.setState({
+          posts: updatedPosts
+        });
+      }).catch(err => console.error(err));
   }
 
   render() {
@@ -174,8 +191,7 @@ class PostFeed extends React.Component {
             fileInputRef={this.fileInputRef}
             setVisible={this.setVisible}
             // handleKeyDown={this.handleKeyDown}
-          >
-          </NewPost>
+          ></NewPost>
           {posts.map(post => (
             <Post
               key={post._id}
@@ -186,8 +202,8 @@ class PostFeed extends React.Component {
               handleAddPost={this.handleAddPost}
               handleToggleLike={this.handleToggleLike}
               handleAddComment={this.handleAddComment}
-            >
-            </Post>
+              handleDeleteComment={this.handleDeleteComment}
+            ></Post>
           ))}
         </Feed>
       </div>

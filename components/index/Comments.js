@@ -125,7 +125,7 @@ const CommentSubButton = styled.button`
   }
 `
 
-const CommentSubLink = CommentSubButton.withComponent('a')
+// const CommentSubLink = CommentSubButton.withComponent('a')
 // const CommentDelete = styled(Icon)`
 //   &#comment-delete{
 //     visibility: hidden;
@@ -144,7 +144,7 @@ class Comments extends React.Component {
 
   handleSubmit = event => {
     const { text } = this.state;
-    const { postId, handleAddComment } = this.props;
+    const { postId, handleAddComment, handleDeleteComment } = this.props;
 
     event.preventDefault();
     if (event.key === 'Enter') {
@@ -157,7 +157,7 @@ class Comments extends React.Component {
   }
 
   showComment = comment => {
-    const { postId, auth } = this.props;
+    const { postId, auth, handleDeleteComment } = this.props;
     const isCommentCreator = comment.postedBy._id === auth.user._id;
 
     return (
@@ -174,6 +174,7 @@ class Comments extends React.Component {
           {
             isCommentCreator && (
               <DeleteIcon
+                onClick={() => handleDeleteComment(postId, comment)}
                 id="comment-delete"
                 name="trash alternate outline"
                 size="large"
@@ -236,10 +237,10 @@ class Comments extends React.Component {
                 onChange={this.handleChange}
               >
               </Form.TextArea>
-              <CommentSubLink
+              <CommentSubButton
                 type="submit"
               >
-              </CommentSubLink>
+              </CommentSubButton>
             </Form.Field>
           </UserCommentInputBox>
         </NewCommentBlock>

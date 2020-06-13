@@ -106,7 +106,7 @@ class Post extends React.PureComponent {
       {
         this.setState({
           comments: this.props.post.comments
-        })
+        });
       }
     // } else {
     //   console.log('prev props', prevProps)
@@ -117,9 +117,17 @@ class Post extends React.PureComponent {
   checkLiked = likes => likes.includes(this.props.auth.user._id)
 
   render() {
-    const { post, auth, isDeletingPost, handleDeletePost, handleToggleLike, handleAddComment } = this.props;
-    const { isLiked, numLikes, comments } = this.state;
+    const {
+      post,
+      auth,
+      isDeletingPost,
+      handleDeletePost,
+      handleToggleLike,
+      handleAddComment,
+      handleDeleteComment
+    } = this.props;
 
+    const { isLiked, numLikes, comments } = this.state;
     const isPostCreator = post.postedBy._id === auth.user._id;
 
     let loveIconWord;
@@ -141,14 +149,14 @@ class Post extends React.PureComponent {
             />
           </CommentBox>
           <CommentDelete>
-            { isPostCreator &&
-              (<Icon
+            {isPostCreator && (
+              <Icon
                 name="trash alternate outline"
                 size="large"
                 disabled={isDeletingPost}
                 onClick={() => handleDeletePost(post)}
-              />)
-            }
+              />
+            )}
           </CommentDelete>
           <CommentUserNameBox id="new-post-username-box">
             <Comment.Author as="a">{post.postedBy.name}</Comment.Author>
@@ -160,40 +168,25 @@ class Post extends React.PureComponent {
             <Comment.Actions>
               <a>Reply</a>
             </Comment.Actions>
-            <LoveCommentLine
-              onClick={() => handleToggleLike(post)}
-            >
+            <LoveCommentLine onClick={() => handleToggleLike(post)}>
               {isLiked ? (
-                <CommentLove
-                  name="heart"
-                  size="large"
-                  color="red"
-
-                />
+                <CommentLove name="heart" size="large" color="red" />
               ) : (
-                <CommentLove
-                  name="heart outline"
-                  size="large"
-                  color="red"
-
-                />
+                <CommentLove name="heart outline" size="large" color="red" />
               )}
-                {
-                  numLikes === 0 ? ` ${loveIconWord}` : ` ${numLikes} ${loveIconWord}`
-                }
+              {numLikes === 0
+                ? ` ${loveIconWord}`
+                : ` ${numLikes} ${loveIconWord}`}
 
-              <CommentIcon
-                name="comment"
-                size="large"
-                id="comment-icon"
-              />
-                {comments.length}
+              <CommentIcon name="comment" size="large" id="comment-icon" />
+              {comments.length}
             </LoveCommentLine>
             <Comments
               auth={auth}
               postId={post._id}
               comments={comments}
               handleAddComment={handleAddComment}
+              handleDeleteComment={handleDeleteComment}
             />
           </CommentUserNameBox>
         </Comment>
