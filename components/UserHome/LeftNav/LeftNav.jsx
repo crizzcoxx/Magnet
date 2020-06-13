@@ -157,6 +157,7 @@ class LeftNav extends React.Component {
     const StyledWrapper = styled.div`
       margin-top: 415px;
     `;
+
     const LeftNavMenu = styled(Menu)`
       #profile-pic-hover {
         color: #ffffff;

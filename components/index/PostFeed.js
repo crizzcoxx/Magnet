@@ -1,7 +1,8 @@
 import { Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
 import NewPost from './NewPost';
 import Post from './Post';
-import { addPost, deletePost, likePost, unlikePost, getPostFeed, addComment } from '../../lib/api'
+import { addPost, deletePost, likePost, unlikePost, getPostFeed, addComment } from '../../lib/api';
+import styled from 'styled-components';
 
 class PostFeed extends React.Component {
   state = {
@@ -153,6 +154,11 @@ class PostFeed extends React.Component {
   render() {
     const { classes, auth } = this.props;
     const { posts, text, image, isAddingPost, isVisible, isDeletingPost } = this.state;
+
+    const CommentFeed = styled(Feed)`
+      display: flex;
+      justify-content: space-around;
+    `
 
     return (
       <div>

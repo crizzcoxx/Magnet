@@ -10,6 +10,8 @@ const NewPostCommentBox = styled.div`
     position: relative;
     overflow: hidden;
     border-radius: 50%;
+    display: flex;
+    justify-content: space-around;
   }
 `
 const NewPostCommentAvatar = styled(Comment.Avatar)`

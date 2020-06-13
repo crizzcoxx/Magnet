@@ -2,23 +2,93 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { Comment, Form, Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
 
-// const NewComment = styled(Comment)`
-//   &&&& {
-//     overflow: hidden;
-//   }
-// `
+const NewComment = styled(Comment)`
+  &&&& {
+    overflow: hidden;
+  }
+`
+
+const NewCommentBlock = styled.div`
+  &{
+    margin: 1px 0px 0px -42px;
+  }
+`;
 
 const CommentList = styled(Comment)`
+  &&&&& {
+    position: relative;
+    top: -17px;
+    width: 22rem;
+    left: 46px;
+  }
+`;
+
+const DeleteIcon = styled(Icon)`
+  &&&&&&{
+    color: green;
+    position: relative;
+    float: right;
+    bottom: 9px;
+  }
+  ${CommentList}:hover & {
+    background-color: pink;
+    visibility: visible;
+  }
+`;
+
+// const Icon = styled.svg`
+//   transition: fill 0.25s;
+//   width: 48px;
+//   height: 48px;
+
+//   ${Link}:hover & { // <-- This is what we can do now.
+//     fill: rebeccapurple;
+//   }
+// `;
+
+const CommentAvatarBox = styled.div`
   &&&& {
-    height: 50px;
+    width: 38px;
+    height: 38px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+  }
+`
+const CommentAvatar = styled(Comment.Avatar)`
+  &#post-comment-avatar {
+    width: 100%;
+    height: auto;
+    margin-top: -3px;
+  }
+`
+
+const CommentName = styled(Comment.Author)`
+ &&&&& {
+  padding: 8px 0px 0px 48px;
+ }
+`
+
+const CommentedWhen = styled(Comment.Metadata)`
+  &&&&&{
+    position: relative;
+    top: -17px;
+    margin-left: 50px;
+  }
+`
+
+const CommentText = styled(Comment.Text)`
+  &&&&&&{
+    margin: -8px 0px 0px 0px;
   }
 `
 
 const NewCommentAvatarBox = styled.div`
-  &&&& {
+  &&&&{
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 38px;
+    height: 38px;
     position: relative;
     overflow: hidden;
     border-radius: 50%;
@@ -35,15 +105,33 @@ const NewCommentAvatar = styled(Comment.Avatar)`
 const UserCommentInputBox = styled(Form)`
     &&&&.ui {
       float: right;
-      max-width: 494px;
       width: 100%;
-      min-width: 100px;
+      max-width: 392px;
+      min-width: 200px;
+      margin: relative;
+      margin: 0px 11em 0 39px;
 }
     }
     &&&& textarea {
       height: 2.9em;
     }
 `
+
+const CommentSubButton = styled.button`
+  &&{
+    position: relative;
+    top: -48px;
+    color: green;
+  }
+`
+
+const CommentSubLink = CommentSubButton.withComponent('a')
+// const CommentDelete = styled(Icon)`
+//   &#comment-delete{
+//     visibility: hidden;
+//   }
+// `
+
 
 class Comments extends React.Component {
   state = {
@@ -75,24 +163,28 @@ class Comments extends React.Component {
     return (
       <div>
         <Comment.Content>
-          <Comment.Author>
+          <CommentName>
             <Link href={`/profile/${comment.postedBy._id}`}>
               <a>{comment.postedBy.name}</a>
             </Link>
-          </Comment.Author>
-          <Comment.Text>{comment.postedBy.text}</Comment.Text>
-        </Comment.Content>
-
-        <br />
-        <span>
+          </CommentName>
+          <CommentedWhen>
+            <span>{comment.createdAt}</span>
+          </CommentedWhen>
           {
             isCommentCreator && (
-              <Icon
+              <DeleteIcon
+                id="comment-delete"
                 name="trash alternate outline"
                 size="large"
-              />
-          )}
-        </span>
+              >
+              </DeleteIcon>
+            )
+          }
+          <CommentText>
+            {comment.text}
+          </CommentText>
+        </Comment.Content>
       </div>
     )
   }
@@ -109,27 +201,23 @@ class Comments extends React.Component {
               key={eachComment._id}
               //title={this.showComment(eachComment)}
             >
-              <Comment.Avatar
-                src={eachComment.postedBy.avatar}
-              >
-              </Comment.Avatar>
+              <CommentAvatarBox>
+                <CommentAvatar
+                  id="post-comment-avatar"
+                  src={eachComment.postedBy.avatar}
+                  size="tiny"
+                >
+                </CommentAvatar>
+              </CommentAvatarBox>
               <Comment.Content>
                 <Comment.Action>
                   {this.showComment(eachComment)}
                 </Comment.Action>
-                <Comment.Metadata>
-                  <div>
-                    {`Joined: ${eachComment.createdAt}`}
-                  </div>
-                </Comment.Metadata>
-                <Comment.Text>
-                  {eachComment.postedBy.text}
-                </Comment.Text>
               </Comment.Content>
             </CommentList>
           ))
         }
-        <div>
+        <NewCommentBlock>
           <NewCommentAvatarBox>
             <NewCommentAvatar
               src={auth.user.avatar}
@@ -148,13 +236,13 @@ class Comments extends React.Component {
                 onChange={this.handleChange}
               >
               </Form.TextArea>
-              <Button
+              <CommentSubLink
                 type="submit"
               >
-              </Button>
+              </CommentSubLink>
             </Form.Field>
           </UserCommentInputBox>
-        </div>
+        </NewCommentBlock>
 
 
           {/* {isVisible ? (
