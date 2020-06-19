@@ -163,6 +163,8 @@ class LeftNav extends React.Component {
         color: #ffffff;
         bottom: 1px; /* For IE8 and earlier */
         opacity: 0.6;
+        position: relative;
+        bottom: 72px;
       }
       #side-user-pic {
         position: relative;
@@ -189,8 +191,11 @@ class LeftNav extends React.Component {
         }
       }
       img#nav-profile-image {
+        display: block;
+        margin: 0 auto;
         width: 100%;
-        height: auto;
+        height: 100%;
+        border-radius: .25rem;
       }
       &#leftNav {
         position: fixed;
@@ -207,8 +212,8 @@ class LeftNav extends React.Component {
     `;
 
     const LeftNavMenuPicFrame = styled.div`
-      width: 73px;
-      height: 76px;
+      width: 72px;
+      height: 72px;
       position: relative;
       overflow: hidden;
       border-radius: 50%;

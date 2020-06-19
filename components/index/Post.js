@@ -29,9 +29,11 @@ const CommentBox = styled.div`
 `
 const CommentAvatar = styled(Comment.Avatar)`
   &#new-post-comment-avatar {
+    display: block;
+    margin: 0 auto;
     width: 100%;
-    height: auto;
-    margin-top: -3px;
+    height: 100%;
+    border-radius: .25rem;
   }
 `
 

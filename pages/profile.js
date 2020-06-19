@@ -1,22 +1,41 @@
-import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Divider from "@material-ui/core/Divider";
-import Edit from "@material-ui/icons/Edit";
-import withStyles from "@material-ui/core/styles/withStyles";
 import Link from 'next/link';
+import styled from "styled-components";
+import {
+  Card,
+  Image,
+  Icon,
+  Segment,
+  Dimmer,
+  Loader,
+  Menu,
+  Button
+} from "semantic-ui-react";
 
-import DeleteUser from '../components/profile/DeleteUser'
-import FollowUser from '../components/profile/FollowUser'
+
+import DeleteUser from '../components/profile/DeleteUser';
+import FollowUser from '../components/profile/FollowUser';
+import FollowTab from '../components/profile/FollowTab';
+import ProfileTabs from '../components/profile/ProfileTabs';
 import { authInitialProps, getUserScript } from '../lib/auth';
 import { getUser } from '../lib/api.js';
+
+const ProfileCard = styled(Card)`
+  &&&& {
+    margin: 0 auto;
+    position: relative;
+    top: 100px;
+  }
+`
+
+const Loading = styled(Segment)`
+  &&&& {
+    height: 600px;
+    margin: 0 auto;
+    position: fixed;
+    display: flex;
+    width: 100%;
+  }
+`
 
 class Profile extends React.Component {
   state = {
@@ -56,115 +75,128 @@ class Profile extends React.Component {
     })
   }
 
-  render() {
-    const { classes } = this.props;
-    const { isLoading, user, isAuth, isFollowing } = this.state;
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+  }
 
+  render() {
+    const { classes, auth } = this.props;
+    const { isLoading, user, isAuth, isFollowing, activeItem } = this.state;
+    console.log('props coming from profile', this.props)
+    console.log('props from auth', user)
     return (
-      <Paper
-        className={classes.root}
-        elevation={4}
-      >
-        <Typography
-          variant="h4"
-          component="h1"
-          align="center"
-          className={classes.title}
-          gutterBottom
-        >
-          Profile
-        </Typography>
+      <div>
         {isLoading ? (
-          <div
-            className={classes.progressContainer}>
-            <CircularProgress
-              className={classes.progress}
-              size={55}
-              thickness={5}
-            />
-          </div>
+          <Loading>
+            <Dimmer active inverted>
+              <Loader active size="massive">Loading</Loader>
+            </Dimmer>
+          </Loading>
         ) : (
-          <List dense>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar
-                  src={user.avatar}
-                  className={classes.bigAvatar}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={user.name}
-                secondary={user.email}
-              />
-              {/* Auth - Edit Buttons / UnAuth - Follow Button */}
+            <ProfileCard>
+              <Image src={user.avatar} wrapped ui={false} />
+              <Card.Content>
+                <Card.Header>{user.name}</Card.Header>
+                <Card.Meta>
+                  <span className="date">{user.createdAt}</span>
+                </Card.Meta>
+                <Card.Description>{user.about}</Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name="user" />
+                  placeholder text
+                </a>
               {isAuth ? (
-                <ListItemSecondaryAction>
-                  <Link
-                  href="/edit-profile"
-                  >
-                    <a>
-                      <IconButton
-                        color="primary"
-                      >
-                        <Edit />
-                      </IconButton>
-                    </a>
-                  </Link>
-                  <DeleteUser
-                    user={user}
-                  />
-                </ListItemSecondaryAction>
-              ) : (
                 <div>
-                  <FollowUser
-                    isFollowing={isFollowing}
-                    toggleFollow={this.toggleFollow}
-                  />
+                  <Link href="/edit-profile" >
+                  <a>
+                    <Button>
+                      Edit
+                    </Button>
+                  </a>
+                </Link>
+                <DeleteUser user={user}></DeleteUser>
                 </div>
-              )}
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText
-                primary={user.about}
-                secondary={`Joined: ${user.createdAt}`}
-              />
-            </ListItem>
-          </List>
+                ) : (
+                  <div>
+                    <FollowUser
+                      isFollowing={isFollowing}
+                      toggleFollow={this.toggleFollow}
+                    />
+                  </div>
+                  )
+              }
+              </Card.Content>
+                <Menu stackable>
+                  <Menu.Item
+                    name="posts"
+                    active={activeItem === "posts"}
+                    onClick={this.handleItemClick}
+                  >
+                    Posts
+                  </Menu.Item>
+                  <Menu.Item
+                    name="following"
+                    active={activeItem === "following"}
+                    onClick={this.handleItemClick}
+                  >
+                    Following
+                  </Menu.Item>
+                  <Menu.Item
+                    name="followers"
+                    active={activeItem === "followers"}
+                    onClick={this.handleItemClick}
+                  >
+                    Followers
+                  </Menu.Item>
+                </Menu>
+                {this.state.activeItem === "posts" ? <ProfileTabs auth={auth}/> : null}
+                {this.state.activeItem === "following" ? <FollowUser auth={auth}/> : null}
+                {this.state.activeItem === "followers" ? <FollowTab auth={auth} /> : null}
+            </ProfileCard>
+
+                // <List dense>
+          //   <ListItem>
+          //     <ListItemAvatar>
+          //       <Avatar src={user.avatar} className={classes.bigAvatar} />
+          //     </ListItemAvatar>
+          //     <ListItemText primary={user.name} secondary={user.email} />
+               /* Auth - Edit Buttons / UnAuth - Follow Button */
+                //  {isAuth ? (
+          //       <ListItemSecondaryAction>
+          //         <Link href="/edit-profile">
+          //           <a>
+          //             <IconButton color="primary">
+          //               <Edit />
+          //             </IconButton>
+          //           </a>
+          //         </Link>
+          //         <DeleteUser user={user} />
+          //       </ListItemSecondaryAction>
+          //     ) : (
+          //       <div>
+          //         <FollowUser
+          //           isFollowing={isFollowing}
+          //           toggleFollow={this.toggleFollow}
+          //         />
+          //       </div>
+          //     )}
+          //   </ListItem>
+          //   <Divider />
+          //   <ListItem>
+          //     <ListItemText
+          //       primary={user.about}
+          //       secondary={`Joined: ${user.createdAt}`}
+          //     />
+          //   </ListItem>
+          // </List>
         )}
-      </Paper>
-    )
+      </div>
+    );
   }
 }
 
-const styles = theme => ({
-  root: {
-    padding: theme.spacing.unit * 3,
-    marginTop: theme.spacing.unit * 5,
-    margin: "auto",
-    [theme.breakpoints.up("sm")]: {
-      width: 600
-    }
-  },
-  title: {
-    color: theme.palette.primary.main
-  },
-  progress: {
-    margin: theme.spacing.unit * 2
-  },
-  progressContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column"
-  },
-  bigAvatar: {
-    width: 60,
-    height: 60,
-    margin: 10
-  }
-});
-
 Profile.getInitialProps = authInitialProps(true);
 
-export default withStyles(styles)(Profile);
+export default Profile;

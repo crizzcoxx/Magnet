@@ -4,21 +4,22 @@ import { Button, Header, Form, Comment, Input, Icon } from 'semantic-ui-react';
 
 const NewPostCommentBox = styled.div`
   &&&& {
-    display: inline-block;
     width: 50px;
     height: 50px;
     position: relative;
     overflow: hidden;
     border-radius: 50%;
-    display: flex;
-    justify-content: space-around;
+    /* display: flex;
+    justify-content: space-around; */
   }
 `
 const NewPostCommentAvatar = styled(Comment.Avatar)`
   &#new-post-comment-avatar {
+    display: block;
+    margin: 0 auto;
     width: 100%;
-    height: auto;
-    margin-top: -3px;
+    height: 100%;
+    border-radius: .25rem;
   }
 `
 
