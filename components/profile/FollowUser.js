@@ -1,10 +1,6 @@
-import Button from "@material-ui/core/Button";
-// import {
-//   Menu,
-//   Image,
-//   Icon,
-//   Button
-// } from 'semantic-ui-react'
+import {
+  Button
+} from 'semantic-ui-react'
 
 import { followUser, unFollowUser } from '../../lib/api'
 

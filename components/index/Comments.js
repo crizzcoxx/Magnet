@@ -125,6 +125,7 @@ const CommentSubButton = styled.button`
   &&{
     position: relative;
     top: -48px;
+    left: 150px;
     color: green;
   }
 `

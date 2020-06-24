@@ -1,13 +1,55 @@
-// import AppBar from "@material-ui/core/AppBar";
-// import Typography from "@material-ui/core/Typography";
-// import Tabs from "@material-ui/core/Tabs";
-// import Tab from "@material-ui/core/Tab";
+import Link from 'next/link';
+import styled from "styled-components";
+import {
+  Menu
+} from "semantic-ui-react";
+
+import PostsTab from './PostsTab';
+import FollowTab from './FollowTab';
 
 class ProfileTabs extends React.Component {
-  state = {};
+  state = {
+    activeItem: 'posts'
+  };
+
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+  }
 
   render() {
-    return <div>ProfileTabs</div>;
+    const { auth, posts, user } = this.props;
+    const { activeItem } = this.state;
+
+    return (
+      <div>
+        <Menu tabular>
+          <Menu.Item
+            name="posts"
+            active={activeItem === "posts"}
+            onClick={this.handleItemClick}
+          >
+            Posts
+          </Menu.Item>
+          <Menu.Item
+            name="following"
+            active={activeItem === "following"}
+            onClick={this.handleItemClick}
+          >
+            Following
+          </Menu.Item>
+          <Menu.Item
+            name="followers"
+            active={activeItem === "followers"}
+            onClick={this.handleItemClick}
+          >
+            Followers
+          </Menu.Item>
+        </Menu>
+        {this.state.activeItem === "posts" ? <PostsTab auth={auth} posts={posts} user={user} />: null}
+        {this.state.activeItem === "following" ? <FollowUser auth={auth} /> : null}
+        {this.state.activeItem === "followers" ? <FollowTab auth={auth} /> : null}
+      </div>
+    )
   }
 }
 

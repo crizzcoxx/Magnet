@@ -1,7 +1,16 @@
 import { Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
 import NewPost from './NewPost';
 import Post from './Post';
-import { addPost, deletePost, likePost, unlikePost, getPostFeed, addComment, deleteComment } from '../../lib/api';
+import {
+  addPost,
+  deletePost,
+  likePost,
+  unlikePost,
+  getPostFeed,
+  addComment,
+  deleteComment
+ } from '../../lib/api';
+
 import styled from 'styled-components';
 
 class PostFeed extends React.Component {
