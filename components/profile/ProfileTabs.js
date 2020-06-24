@@ -17,7 +17,16 @@ class ProfileTabs extends React.Component {
   }
 
   render() {
-    const { auth, posts, user } = this.props;
+    const {
+      auth,
+      posts,
+      user,
+      isDeletingPost,
+      handleDeletePost,
+      handleToggleLike,
+      handleAddComment,
+      handleDeleteComment
+    } = this.props;
     const { activeItem } = this.state;
 
     return (
@@ -45,7 +54,17 @@ class ProfileTabs extends React.Component {
             Followers
           </Menu.Item>
         </Menu>
-        {this.state.activeItem === "posts" ? <PostsTab auth={auth} posts={posts} user={user} />: null}
+        {this.state.activeItem === "posts" ?
+          <PostsTab
+            auth={auth}
+            posts={posts}
+            user={user}
+            isDeletingPost={isDeletingPost}
+            handleDeletePost={handleDeletePost}
+            handleToggleLike={handleToggleLike}
+            handleAddComment={handleAddComment}
+            handleDeleteComment={handleDeleteComment}
+          />: null}
         {this.state.activeItem === "following" ? <FollowUser auth={auth} /> : null}
         {this.state.activeItem === "followers" ? <FollowTab auth={auth} /> : null}
       </div>

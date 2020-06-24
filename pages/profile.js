@@ -17,8 +17,13 @@ import ProfileTabs from '../components/profile/ProfileTabs';
 import { authInitialProps, getUserScript } from '../lib/auth';
 import {
   getUser,
-  getPostsByUser
-} from '../lib/api.js';
+  getPostsByUser,
+  deletePost,
+  likePost,
+  unlikePost,
+  addComment,
+  deleteComment
+} from "../lib/api.js";
 
 const ProfileCard = styled(Card)`
   &&&& {
@@ -45,7 +50,8 @@ class Profile extends React.Component {
     posts: [],
     isAuth: false,
     isFollowing: false,
-    isLoading: true
+    isLoading: true,
+    isDeletingPost: false
   };
 
   componentDidMount() {
@@ -171,7 +177,8 @@ class Profile extends React.Component {
       posts,
       isAuth,
       isFollowing,
-      activeItem
+      activeItem,
+      isDeletingPost
     } = this.state;
     console.log("props coming from profile", this.props);
     console.log("props from auth", user);
@@ -222,6 +229,12 @@ class Profile extends React.Component {
               auth={auth}
               user={user}
               posts={posts}
+              isDeletingPost={isDeletingPost}
+              handleDeletePost={this.handleDeletePost}
+              handleAddPost={this.handleAddPost}
+              handleToggleLike={this.handleToggleLike}
+              handleAddComment={this.handleAddComment}
+              handleDeleteComment={this.handleDeleteComment}
             />
           </ProfileCard>
 
