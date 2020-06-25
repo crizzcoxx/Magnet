@@ -12,8 +12,6 @@ import AddProfilePhoto from '../../../static/images/upload-photo-only.png'
 // import AddProfilePhoto from "../../../static/images/profile-image.jpg";
 import EditProfilePhoto from '../../../static/images/upload-photo-hover-dark.png';
 import ProfilePicHover from './ProfilePicHover'
-//import Auth from '../../../src/pages/Auth'
-//import Navbar from '../../../src/components/Navbar'
 import HomeMain from './HomeDashboard/HomeMain'
 import Jobs from './HomeDashboard/Jobs/Jobs'
 import MainFeed from './HomeDashboard/MainFeed/MainFeed'
@@ -445,35 +443,7 @@ class LeftNav extends React.Component {
   }
 }
 
-const styles = theme => ({
-  root: {
-    padding: theme.spacing.unit * 3,
-    marginTop: theme.spacing.unit * 5,
-    margin: "auto",
-    [theme.breakpoints.up("sm")]: {
-      width: 600
-    }
-  },
-  title: {
-    color: theme.palette.primary.main
-  },
-  progress: {
-    margin: theme.spacing.unit * 2
-  },
-  progressContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column"
-  },
-  bigAvatar: {
-    width: 60,
-    height: 60,
-    margin: 10
-  }
-});
-
 LeftNav.getInitialProps = authInitialProps(true);
 
-export default withStyles(styles)(LeftNav);
+export default LeftNav;
 

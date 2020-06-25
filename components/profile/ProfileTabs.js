@@ -65,8 +65,8 @@ class ProfileTabs extends React.Component {
             handleAddComment={handleAddComment}
             handleDeleteComment={handleDeleteComment}
           />: null}
-        {this.state.activeItem === "following" ? <FollowUser auth={auth} /> : null}
-        {this.state.activeItem === "followers" ? <FollowTab auth={auth} /> : null}
+        {this.state.activeItem === "following" ? <FollowTab users={user.following} auth={auth} /> : null}
+        {this.state.activeItem === "followers" ? <FollowTab users={user.followers} auth={auth} /> : null}
       </div>
     )
   }

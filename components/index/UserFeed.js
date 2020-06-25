@@ -110,35 +110,35 @@ class UserFeed extends React.Component {
                   onClick={() => this.setVisible()}
                 />
                   <Feed>
-                  <label><b>Browse Users to Follow</b></label>
-                    {users.map((user, i) => (
-                      <Feed.Event key={user._id}>
-                        {console.log('user list being mapped', user)}
-                        <UserBox>
-                          <UserFeedImage
-                            src={user.avatar}
-                            size="tiny"
-                          >
-                          </UserFeedImage>
-                        </UserBox>
-                        <Feed.Content>
-                          <Feed.Summary>
-                            <Feed.User><Link href={`/profile/${user._id}`} ><a>{user.name}</a></Link>
-                            </Feed.User> {/*is following you.*/}
-                            <Feed.Date>{`Joined: ${users.createdAt}`}</Feed.Date>
-                          </Feed.Summary>
-                          <Button
-                            onClick={() => this.handleFollow(user, i)}
-                          >Follow
-                          </Button>
-                          <Feed.Meta>
-                            <Feed.Like>
-                              <Icon name='bookmark outline' />4 Likes
-                            </Feed.Like>
-                          </Feed.Meta>
-                        </Feed.Content>
-                      </Feed.Event>
-                    ))}
+                    <label><b>Browse Users to Follow</b></label>
+                      {users.map((user, i) => (
+                        <Feed.Event key={user._id}>
+                          {console.log('user list being mapped', user)}
+                          <UserBox>
+                            <UserFeedImage
+                              src={user.avatar}
+                              size="tiny"
+                            >
+                            </UserFeedImage>
+                          </UserBox>
+                          <Feed.Content>
+                            <Feed.Summary>
+                              <Feed.User><Link href={`/profile/${user._id}`} ><a>{user.name}</a></Link>
+                              </Feed.User> {/*is following you.*/}
+                              <Feed.Date>{`Joined: ${users.createdAt}`}</Feed.Date>
+                            </Feed.Summary>
+                            <Button
+                              onClick={() => this.handleFollow(user, i)}
+                            >Follow
+                            </Button>
+                            <Feed.Meta>
+                              <Feed.Like>
+                                <Icon name='bookmark outline' />4 Likes
+                              </Feed.Like>
+                            </Feed.Meta>
+                          </Feed.Content>
+                        </Feed.Event>
+                      ))}
                   </Feed>
               </Segment>
             </Sidebar.Pusher>
