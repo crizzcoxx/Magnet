@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Comment, Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
+import { formatDistanceToNow, parseISO } from 'date-fns';
+
 import Comments from './Comments'
 
 const CommentPostBox = styled(Comment.Group)`
@@ -91,32 +93,36 @@ class Post extends React.PureComponent {
       isLiked: this.checkLiked(this.props.post.likes),
       numLikes: this.props.post.likes.length,
       comments: this.props.post.comments
-    })
+    });
   }
 
   componentDidUpdate(prevProps) {
     console.log({ prevProps }, { props: this.props });
     if (prevProps.post.likes.length !== this.props.post.likes.length) {
-      console.log('UPDATING', { prevProps }, { props: this.props });
+      console.log("UPDATING", { prevProps }, { props: this.props });
       this.setState({
         isLiked: this.checkLiked(this.props.post.likes),
         numLikes: this.props.post.likes.length
       });
     }
 
-    if (prevProps.post.comments.length !== this.props.post.comments.length)
-      {
-        this.setState({
-          comments: this.props.post.comments
-        });
-      }
-    // } else {
-    //   console.log('prev props', prevProps)
-    // }
-
+    if (prevProps.post.comments.length !== this.props.post.comments.length) {
+      this.setState({
+        comments: this.props.post.comments
+      });
+    }
   }
 
-  checkLiked = likes => likes.includes(this.props.auth.user._id)
+  checkLiked = likes => likes.includes(this.props.auth.user._id);
+
+  formatTimeCreated = time => {
+    const timeSince = formatDistanceToNow(
+      parseISO(time, {
+        includeSeconds: true,
+        addSuffix: true
+      }))
+    return timeSince;
+  };
 
   render() {
     const {
@@ -134,11 +140,11 @@ class Post extends React.PureComponent {
 
     let loveIconWord;
     if (numLikes === 0) {
-      loveIconWord = 'No Love'
-    } else if ( numLikes === 1) {
-      loveIconWord = 'Love'
+      loveIconWord = "No Love";
+    } else if (numLikes === 1) {
+      loveIconWord = "Love";
     } else {
-      loveIconWord = 'Loves'
+      loveIconWord = "Loves";
     }
 
     return (
@@ -163,7 +169,7 @@ class Post extends React.PureComponent {
           <CommentUserNameBox id="new-post-username-box">
             <Comment.Author as="a">{post.postedBy.name}</Comment.Author>
             <Comment.Metadata>
-              <span>{post.createdAt}</span>
+              <span>{this.formatTimeCreated(post.createdAt)}</span>
             </Comment.Metadata>
             <Comment.Text>{post.text}</Comment.Text>
             {post.image && <CommentPostImg src={post.image} />}

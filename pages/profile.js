@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   Card,
   Image,
@@ -9,7 +9,8 @@ import {
   Loader,
   Menu,
   Button
-} from "semantic-ui-react";
+} from 'semantic-ui-react';
+import { formatDistanceToNow, parseISO, format } from 'date-fns';
 
 
 import DeleteUser from '../components/profile/DeleteUser';
@@ -169,6 +170,18 @@ class Profile extends React.Component {
       .catch(err => console.error(err));
   };
 
+  // formatTimeCreated = time => {
+  //   const timeSince = formatDistanceToNow(
+  //     parseISO(time, {
+  //       includeSeconds: true,
+  //       addSuffix: true
+  //     })
+  //   );
+  //   return timeSince;
+  // };
+  formatDate = date => format(new Date(), "MMM do, yyyy");
+  //Tuesday, November 6th, 2018
+
   render() {
     const { auth } = this.props;
     const {
@@ -198,7 +211,7 @@ class Profile extends React.Component {
             <Card.Content>
               <Card.Header>{user.name}</Card.Header>
               <Card.Meta>
-                <span className="date">{user.createdAt}</span>
+                <span className="date">{this.formatDate(user.createdAt)}</span>
               </Card.Meta>
               <Card.Description>{user.about}</Card.Description>
             </Card.Content>

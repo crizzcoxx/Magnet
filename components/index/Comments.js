@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Comment, Form, Icon, Header, Feed, List, Image, Button } from 'semantic-ui-react';
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 const NewComment = styled(Comment)`
   &&&& {
@@ -140,26 +141,26 @@ const CommentSubButton = styled.button`
 
 class Comments extends React.Component {
   state = {
-    text: ''
+    text: ""
   };
 
   handleChange = event => {
-    this.setState({ text: event.target.value })
-  }
+    this.setState({ text: event.target.value });
+  };
 
   handleSubmit = event => {
     const { text } = this.state;
     const { postId, handleAddComment, handleDeleteComment } = this.props;
 
     event.preventDefault();
-    if (event.key === 'Enter') {
-      alert('enter press here! ')
+    if (event.key === "Enter") {
+      alert("enter press here! ");
     }
     handleAddComment(postId, text);
     this.setState({
-      text: ''
+      text: ""
     });
-  }
+  };
 
   showComment = comment => {
     const { postId, auth, handleDeleteComment } = this.props;
@@ -174,26 +175,31 @@ class Comments extends React.Component {
             </Link>
           </CommentName>
           <CommentedWhen>
-            <span>{comment.createdAt}</span>
+            <span>{this.formatTimeCreated(comment.createdAt)}</span>
           </CommentedWhen>
-          {
-            isCommentCreator && (
-              <DeleteIcon
-                onClick={() => handleDeleteComment(postId, comment)}
-                id="comment-delete"
-                name="trash alternate outline"
-                size="large"
-              >
-              </DeleteIcon>
-            )
-          }
-          <CommentText>
-            {comment.text}
-          </CommentText>
+          {isCommentCreator && (
+            <DeleteIcon
+              onClick={() => handleDeleteComment(postId, comment)}
+              id="comment-delete"
+              name="trash alternate outline"
+              size="large"
+            ></DeleteIcon>
+          )}
+          <CommentText>{comment.text}</CommentText>
         </Comment.Content>
       </div>
-    )
-  }
+    );
+  };
+
+  formatTimeCreated = time => {
+    const timeSince = formatDistanceToNow(
+      parseISO(time, {
+        includeSeconds: true,
+        addSuffix: true
+      })
+    );
+    return timeSince;
+  };
 
   render() {
     const { auth, comments } = this.props;
@@ -201,57 +207,44 @@ class Comments extends React.Component {
 
     return (
       <Comment.Group>
-        {
-          comments.map(eachComment => (
-            <CommentList
-              key={eachComment._id}
-              //title={this.showComment(eachComment)}
-            >
-              <CommentAvatarBox>
-                <CommentAvatar
-                  id="post-comment-avatar"
-                  src={eachComment.postedBy.avatar}
-                  size="tiny"
-                >
-                </CommentAvatar>
-              </CommentAvatarBox>
-              <Comment.Content>
-                <Comment.Action>
-                  {this.showComment(eachComment)}
-                </Comment.Action>
-              </Comment.Content>
-            </CommentList>
-          ))
-        }
+        {comments.map(eachComment => (
+          <CommentList
+            key={eachComment._id}
+            //title={this.showComment(eachComment)}
+          >
+            <CommentAvatarBox>
+              <CommentAvatar
+                id="post-comment-avatar"
+                src={eachComment.postedBy.avatar}
+                size="tiny"
+              ></CommentAvatar>
+            </CommentAvatarBox>
+            <Comment.Content>
+              <Comment.Action>{this.showComment(eachComment)}</Comment.Action>
+            </Comment.Content>
+          </CommentList>
+        ))}
         <NewCommentBlock>
           <NewCommentAvatarBox>
             <NewCommentAvatar
               src={auth.user.avatar}
               id="new-post-comment-avatar"
-            >
-            </NewCommentAvatar>
+            ></NewCommentAvatar>
           </NewCommentAvatarBox>
-          <UserCommentInputBox
-            onSubmit={this.handleSubmit}
-          >
+          <UserCommentInputBox onSubmit={this.handleSubmit}>
             <Form.Field>
               <Form.TextArea
                 placeholder={`Go ahead, comment ${auth.user.name}`}
                 value={text}
                 name="text"
                 onChange={this.handleChange}
-              >
-              </Form.TextArea>
-              <CommentSubButton
-                type="submit"
-              >
-              </CommentSubButton>
+              ></Form.TextArea>
+              <CommentSubButton type="submit"></CommentSubButton>
             </Form.Field>
           </UserCommentInputBox>
         </NewCommentBlock>
 
-
-          {/* {isVisible ? (
+        {/* {isVisible ? (
             <PostButtonBox>
               <Icon
                 input
@@ -282,7 +275,6 @@ class Comments extends React.Component {
               </PostButton>
             </PostButtonBox>
           ) : null} */}
-
       </Comment.Group>
     );
   }

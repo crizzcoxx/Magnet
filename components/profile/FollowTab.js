@@ -6,8 +6,11 @@ import {
   Icon,
   Image
 } from "semantic-ui-react";
+import { formatDistanceToNow, parseISO, format } from "date-fns";
 
 class FollowTab extends React.Component {
+
+  formatDate = date => format(new Date(), "MMM do, yyyy");
 
   render() {
     const { users, auth } = this.props;
@@ -43,9 +46,13 @@ class FollowTab extends React.Component {
                       <a>{user.name}</a>
                     </Link>
                   </Feed.User>
-                  <Feed.Date>{`Joined: ${auth.user.createdAt}`}</Feed.Date>
+                  <Feed.Date>{`Joined: ${this.formatDate(
+                    auth.user.createdAt
+                  )}`}</Feed.Date>
                 </Feed.Summary>
-                <Button onClick={() => this.handleFollow(user, i)}>Follow</Button>
+                <Button onClick={() => this.handleFollow(user, i)}>
+                  Follow
+                </Button>
                 <Feed.Meta>
                   <Feed.Like>
                     <Icon name="bookmark outline" />4 Likes
@@ -56,7 +63,7 @@ class FollowTab extends React.Component {
           ))}
         </Feed>
       </div>
-    )
+    );
   }
 };
 
