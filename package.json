@@ -15,7 +15,8 @@
     "alias": "now alias",
     "remove:deploy": "now rm next-connect",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "heroku-postbuild": "next build"
   },
   "dependencies": {
     "@babel/core": "^7.6.4",
