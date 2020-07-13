@@ -8,7 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Delete from "@material-ui/icons/Delete";
 
 import styled from 'styled-components'
-import { Button } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 
 import { signoutUser } from '../../lib/auth';
 import { deleteUser } from '../../lib/api';
@@ -52,6 +52,33 @@ class DeleteUser extends React.Component {
 
     return (
       <div>
+        {/* <Button onClick={this.show('small')}>Small</Button> */}
+        {/* <Button
+          onClick={this.handleOpen}
+        >
+        </Button> */}
+
+        <Modal size={'mini'} open={open} onClose={this.handleClose}>
+          <Modal.Header>Delete Account</Modal.Header>
+          <Modal.Content>
+            <p>You Sure You Wanna Delete Your Account?</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              negative
+              onclick={this.handleClose}
+            >No, I can't quit you
+            </Button>
+            <Button
+              positive
+              icon='checkmark'
+              labelPosition='right'
+              content='Yes'
+              onClick={this.handleDeleteUser}
+              disabled={isDeleting}
+            />
+          </Modal.Actions>
+        </Modal>
         {/* Delete User Button */}
         <Button
           onClick={this.handleOpen}
@@ -60,7 +87,7 @@ class DeleteUser extends React.Component {
           <Delete />
         </Button>
         {/* Delete User Dialogue */}
-        <Dialog
+        {/* <Dialog
           open={open}
           onClose={this.handleClose}
         >
@@ -87,7 +114,7 @@ class DeleteUser extends React.Component {
               </Button>
             </DialogActions>
           </DialogTitle>
-        </Dialog>
+        </Dialog> */}
       </div>
     )
   }

@@ -1,4 +1,3 @@
-import withStyles from "@material-ui/core/styles/withStyles";
 import styled from 'styled-components'
 import {
   Menu,

@@ -1,13 +1,15 @@
-const express = require("express");
-const next = require("next");
-const session = require("express-session");
-const mongoose = require("mongoose");
-const logger = require("morgan");
-const mongoSessionStore = require("connect-mongo");
-const expressValidator = require("express-validator");
-const passport = require("passport");
-const helmet = require("helmet");
-const compression = require("compression");
+const express = require('express');
+const next = require('next');
+const session = require('express-session');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const mongoSessionStore = require('connect-mongo');
+// const { body, validationResult, check } = require('express-validator/check');
+// const { sanitizeBody } = require('express-validator/filter');
+const expressValidator = require('express-validator');
+const passport = require('passport');
+const helmet = require('helmet');
+const compression = require('compression');
 
 /* Loads all variables from .env file to "process.env" */
 require("dotenv").config();
@@ -49,10 +51,10 @@ app.prepare().then(() => {
     /* Compression gives us gzip compression */
     server.use(compression());
   }
-
   /* Body Parser built-in to Express as of version 4.16 */
   server.use(express.json());
-  /* Express Validator will validate form data sent to the backend */
+  /* Express Validator 7/10/20 - need to re-implement due to new version specs*/
+  // server.use(()); -- do not use old version
   server.use(expressValidator());
 
   /* give all Next.js's requests to Next.js server */

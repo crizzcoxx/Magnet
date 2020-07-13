@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const passport = require('passport');
+const { body, validationResult, check } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
 
 exports.validateSignup = (req, res, next) => {
   req.sanitizeBody('name');
