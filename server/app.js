@@ -12,14 +12,14 @@ const helmet = require('helmet');
 const compression = require('compression');
 
 /* Loads all variables from .env file to "process.env" */
-require("dotenv").config();
+require('dotenv').config();
 /* Require our models here so we can use the mongoose.model() singleton to reference our models across our app */
 require("./models/Post");
 require("./models/User");
 const routes = require("./routes");
 require("./passport");
 
-const dev = process.env.NODE_ENV !== "production";
+const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 3000;
 const ROOT_URL = dev ? `http://localhost:${port}` : process.env.PRODUCTION_URL;
 const app = next({ dev });
@@ -28,7 +28,8 @@ const handle = app.getRequestHandler();
 const mongooseOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 };
 
 mongoose

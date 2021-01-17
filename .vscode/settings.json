@@ -9,5 +9,6 @@
   "eslint.autoFixOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "terminal.integrated.shell.osx": "/bin/zsh"
 }

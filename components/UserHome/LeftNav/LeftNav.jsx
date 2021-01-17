@@ -7,9 +7,9 @@ import {
 } from 'semantic-ui-react'
 
 import { medBlue, darkerWhite, lightBlue, hangryGrayBtn, navGray } from '../../../.semantic/src/site/variables'
-import AddProfilePhoto from '../../../static/images/upload-photo-only.png'
-// import AddProfilePhoto from "../../../static/images/profile-image.jpg";
-import EditProfilePhoto from '../../../static/images/upload-photo-hover-dark.png';
+import AddProfilePhoto from '../../../public/images/upload-photo-only.png'
+// import AddProfilePhoto from "../../../public/images/profile-image.jpg";
+import EditProfilePhoto from '../../../public/images/upload-photo-hover-dark.png';
 import ProfilePicHover from './ProfilePicHover'
 import HomeMain from './HomeDashboard/HomeMain'
 import Jobs from './HomeDashboard/Jobs/Jobs'

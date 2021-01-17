@@ -5,7 +5,7 @@ const path = require("path");
 const Dotenv = require("dotenv-webpack");
 const withImages = require('next-images');
 const withPlugins = require('next-compose-plugins');
-const withCSS = require('@zeit/next-css')
+//const withCSS = require('@zeit/next-css')
 
 const nextConfig = {
   target: 'serverless',
@@ -27,8 +27,8 @@ const nextConfig = {
         loader: 'url-loader',
         options: {
           limit: 8192,
-          publicPath: '/_next/static/',
-          outputPath: 'static/',
+          publicPath: '/_next/public/',
+          outputPath: 'public/',
           name: '[name].[ext]',
         },
       }
@@ -37,4 +37,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withPlugins([[withCSS, withImages]], nextConfig);
+module.exports = withPlugins([[withImages]], nextConfig);

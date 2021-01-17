@@ -74,7 +74,7 @@ const Navbar = ({ classes, router, pageProps: { auth } }) => {
             <Dropdown
               direction='left'
               pointing='top'
-              item icon='setting large'
+              item icon='large setting'
               simple
               id='user-dropdown'
               borderless

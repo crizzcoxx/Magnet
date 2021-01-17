@@ -1,5 +1,5 @@
 /* Next.js / MUI integration here: https://github.com/mui-org/material-ui/tree/master/examples/nextjs */
-import Document, { Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 // styled-jsx included in Next.js by default
 import flush from "styled-jsx/server";
 import { ServerStyleSheet } from "styled-components";
@@ -48,7 +48,7 @@ class MyDocument extends Document {
     const { pageContext, user = {} } = this.props;
 
     return (
-      <html lang="en" dir="ltr">
+      <Html lang="en" dir="ltr">
         <Head>
           {/* You can use the head tag, just not for setting <title> as it leads to unexpected behavior */}
           <link
@@ -71,10 +71,6 @@ class MyDocument extends Document {
           />
           <meta charSet="utf-8" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
-          />
           {/* PWA primary color */}
           <meta
             name="theme-color"
@@ -98,7 +94,7 @@ class MyDocument extends Document {
           <script dangerouslySetInnerHTML={{ __html: getUserScript(user) }} />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }
