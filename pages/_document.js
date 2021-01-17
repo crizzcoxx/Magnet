@@ -83,9 +83,7 @@ class MyDocument extends Document {
           <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
           {/* <link rel="stylesheet" type="text/css" href="/static/styles.css" /> */}
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.css" />
-          <link rel="stylesheet" type="text/css" href="Semantic-UI-Alert/Semantic-UI-Alert.css" />
           <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.4/dist/semantic.min.js"></script>
-          <script type="text/javascript" src="Semantic-UI-Alert/Semantic-UI-Alert.js"></script>
           {/* <link rel="stylesheet" type="text/css" href="/.semantic/dist/semantic.min.css" /> */}
           {/* <script src="/.semantic/dist/semantic.min.js" /> */}
         </Head>

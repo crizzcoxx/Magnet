@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from 'styled-components'
-import { Icon, Button, Menu, Popup, Dropdown } from 'semantic-ui-react'
+import { Button, Menu, Popup, Dropdown, Icon } from 'semantic-ui-react'
 
 import NavLinks from './NavLinks';
 import ActiveLink from '../ActiveLink';
@@ -74,10 +74,8 @@ const Navbar = ({ classes, router, pageProps: { auth } }) => {
             <Dropdown
               direction='left'
               pointing='top'
-              item icon='large setting'
-              simple
+              icon='setting large'
               id='user-dropdown'
-              borderless
             >
               <Dropdown.Menu
                 >

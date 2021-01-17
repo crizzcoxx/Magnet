@@ -181,9 +181,7 @@ const FunnelStages = () => (
         content={<ResumeReview />}
         position="bottom center"
         verticalOffset={-5}
-        //hoverable="false"
         on="hover"
-        hoverable="false"
       />
     <FunnelStage
       id="recruiter-subbed"
